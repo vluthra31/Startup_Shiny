@@ -143,7 +143,8 @@ shinyServer(function(input, output) {
   
   output$TopPerYear = renderPlot({
     ggplot(cat_year_breakdown, aes(x = company_category_code, y = total)) + geom_bar(stat = 'identity', aes(fill = company_category_code)) +
-      facet_wrap(~funded_year) + xlab('Industry') + ylab('Total Invesment')
+      facet_wrap(~funded_year) + xlab('Industry') + ylab('Total Invesment') + theme(axis.text.x=element_blank(),
+                                                                                    axis.ticks.x=element_blank())
 })
   
   output$ftest = renderPrint(
