@@ -4,7 +4,7 @@ shinyServer(function(input, output) {
   Total_Invest_Cat = reactive({InvestmentsFinal %>% 
       filter(company_category_code == input$Industry | company_category_code == input$Industry2, funded_year < 2014) %>% 
       group_by(company_category_code, funded_year) %>%
-      summarise(total = sum(raised_amount_usd, na.rm = TRUE))
+      summarise(total = sum(raised_amount_usd, na.rm = TRUE)/1000000)
   })
 
   
@@ -12,7 +12,7 @@ shinyServer(function(input, output) {
     mutate(ind = row_number()) %>% spread(key = company_category_code, value = raised_amount_usd) %>% select(-ind)
 
   output$fullsum = renderPlot({
-    ggplot(total_summary, aes(x = funded_year, y = total)) + geom_histogram(stat= 'identity', aes(fill = total)) + geom_smooth(se = FALSE) + xlab('Years') + ylab('Total Invested')
+    ggplot(total_summary, aes(x = funded_year, y = total)) + geom_histogram(stat= 'identity', aes(fill = total)) + geom_smooth(se = FALSE) + xlab('Years') + ylab('Total Invested(in millions)')
     
   })
   
@@ -68,7 +68,7 @@ shinyServer(function(input, output) {
     ggplot(Total_Invest_Cat(), 
            aes(x = funded_year,
                y = total)) + geom_density(stat = 'identity', aes(fill= company_category_code, alpha = .1)) + xlab('Years') + 
-                ylab('Total Invested') + title('Change Per Industry')
+                ylab('Total Invested (in millions)') + title('Change Per Industry')
   })
   
   output$Industry_Table = renderGvis({
@@ -84,7 +84,7 @@ shinyServer(function(input, output) {
   USA = reactive({
     InvestmentsFinal %>% filter(company_country_code == 'USA', funding_round_type == input$fundinground, funded_year < 2014) %>%
       group_by(funding_round_type, funded_year) %>%
-      summarise(total = sum(raised_amount_usd, na.rm = TRUE))
+      summarise(total = sum(raised_amount_usd, na.rm = TRUE)/1000000)
   })
   
   
@@ -92,7 +92,7 @@ shinyServer(function(input, output) {
     InvestmentsFinal %>%
       filter(company_country_code != 'USA', funding_round_type == input$fundinground, funded_year < 2014) %>%
       group_by(funding_round_type, funded_year) %>%
-      summarise(total = sum(raised_amount_usd, na.rm = TRUE))
+      summarise(total = sum(raised_amount_usd, na.rm = TRUE)/1000000)
   })
   
   output$Quarterly = renderPlot({
@@ -110,13 +110,13 @@ shinyServer(function(input, output) {
   output$USA_Distribution = renderPlot({
     ggplot(USA(), 
            aes(x = funded_year,
-               y = total)) + geom_smooth() + xlab('Years') + ylab('Total Invested')
+               y = total)) + geom_smooth() + xlab('Years') + ylab('Total Invested(in millions)')
   }) 
   
   output$Global_Distribution = renderPlot({
     ggplot(GLOBAL(), 
            aes(x = funded_year,
-               y = total)) + geom_smooth() + xlab('Years') + ylab('Total Invested')
+               y = total)) + geom_smooth() + xlab('Years') + ylab('Total Invested(in millions)')
   }) 
   
   output$pie_chart = renderGvis({
@@ -134,7 +134,7 @@ shinyServer(function(input, output) {
   })
   
   output$Q1Box = renderPlot({
-    ggplot(Q1_Info, aes(x = funded_year, y = total)) + geom_smooth() + xlab('Years') + ylab('Total Invested')
+    ggplot(Q1_Info, aes(x = funded_year, y = total)) + geom_smooth() + xlab('Years') + ylab('Total Invested(in millions)')
   })
   
   output$Cat_summary = renderPlot({
@@ -143,7 +143,7 @@ shinyServer(function(input, output) {
   
   output$TopPerYear = renderPlot({
     ggplot(cat_year_breakdown, aes(x = company_category_code, y = total)) + geom_bar(stat = 'identity', aes(fill = company_category_code)) +
-      facet_wrap(~funded_year) + xlab('Industry') + ylab('Total Invesment') + theme(axis.text.x=element_blank(),
+      facet_wrap(~funded_year) + xlab('Industry') + ylab('Total Invesment(in millions') + theme(axis.text.x=element_blank(),
                                                                                     axis.ticks.x=element_blank())
 })
   

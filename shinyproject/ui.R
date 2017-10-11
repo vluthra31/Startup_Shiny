@@ -115,7 +115,7 @@ shinyUI(dashboardPage(skin = 'black',
             tabItem(tabName = 'FundingType',
                     h1('Funding Breakdown', class= 'text-muted'),
                     selectInput(inputId = 'fundinground', 'Choose an Investment:',
-                                choices = unique(InvestmentsFinal$funding_round_type), selected = 'venture'),
+                                choices = unique(InvestmentsFinal$funding_round_type[InvestmentsFinal$funding_round_type != 'crowdfunding']), selected = 'venture'),
                     plotOutput(outputId = 'Change_Investment'),
                     fluidRow(
                     box(
@@ -130,8 +130,10 @@ shinyUI(dashboardPage(skin = 'black',
                     h1('Acquisition/Post-IPO Summary', class= 'text-muted'),
                     fluidRow(
                     box(
+                    h2('Acquisitions'),
                     tableOutput(outputId = 'pie_chart')),
                     box(
+                      h2('IPO'),
                       tableOutput(outputId = 'pie_chart2')),
                       tableOutput('pie2_table')
                     )),

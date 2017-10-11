@@ -43,7 +43,7 @@ BuySide_Acquired = head(InvestmentsFinal %>% filter(Acquired == 'Yes') %>% selec
                   group_by(investor_name) %>% summarise(count = n_distinct(company_name), total = sum(raised_amount_usd, na.rm = TRUE)) %>%
                     arrange(desc(count)), 10)
 Q1_Info = InvestmentsFinal %>% filter(FundedQuarter == 'Q1') %>% select(funded_year, raised_amount_usd) %>% group_by(funded_year) %>%
-  summarise(total = sum(raised_amount_usd, na.rm = TRUE))
+  summarise(total = sum(raised_amount_usd, na.rm = TRUE)/1000000)
 
 Q1_14_CAT = head(InvestmentsFinal %>% filter(funded_year == '2014') %>% select(company_category_code, raised_amount_usd) %>% 
   group_by(company_category_code) %>% summarise(count = n(), total = sum(raised_amount_usd, na.rm = TRUE)) %>% 
@@ -54,7 +54,7 @@ cat_summary = InvestmentsFinal %>% filter(FundedQuarter == 'Q1') %>%
   summarise(count = n())
 
 cat_year_breakdown = InvestmentsFinal %>% select(company_category_code, funded_year, raised_amount_usd) %>% group_by(funded_year, company_category_code) %>%
-  summarise(total = (sum(raised_amount_usd, na.rm = TRUE))) %>% filter(total > 5000000000, funded_year < 2014)
+  summarise(total = (sum(raised_amount_usd, na.rm = TRUE)/1000000)) %>% filter(total > 5000, funded_year < 2014)
 funding_breakdown = InvestmentsFinal %>% filter(funded_year < 2014, funding_round_type != 'other') %>%
   group_by(funding_round_type, FundedQuarter, funded_year) %>% summarise(count = n()) %>% arrange(FundedQuarter)
 unique(InvestmentsFinal$funding_round_type)

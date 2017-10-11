@@ -5,9 +5,9 @@ account: vineetluthra
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 222928
-bundleId: 1020567
+bundleId: 1020685
 url: https://vineetluthra.shinyapps.io/startupfunding/
-when: 1507692825.81817
+when: 1507698079.25734
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: CrunchbaseRough.R
