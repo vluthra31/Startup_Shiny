@@ -1,0 +1,13 @@
+name: startupfunding
+title: StartupFunding
+username:
+account: vineetluthra
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 222928
+bundleId: 1019345
+url: https://vineetluthra.shinyapps.io/startupfunding/
+when: 1507647314.95543
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: CrunchbaseRough.R
